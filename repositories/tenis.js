@@ -18,3 +18,30 @@ export async function adicionarTenis(newC) {
     ])
     return info.insertId;
 }
+
+export async function alterarTenis(id, newC) {
+    const comando = `update tenis
+                     set nome = ?,
+                         genero = ?,
+                         episodios = ?,
+                         ano_lancamento = ?,
+                         estudio = ?,
+                         avaliacao = ?
+                     where id = ?`;
+    const [info] = await connection.query(comando, [
+        newC.nome,
+        newC.genero,
+        newC.episodios,
+        newC.ano_lancamento,
+        newC.estudio,
+        newC.avaliacao,
+        id
+    ]);
+    return "Tênis alterado com sucesso!";
+}
+
+export async function deletarTenis(id) {
+    const comando = `delete from tenis where id = ?`;
+    const [info] = await connection.query(comando, [id]);
+    return "Tênis deletado com sucesso!";
+}

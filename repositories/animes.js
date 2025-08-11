@@ -18,3 +18,30 @@ export async function adicionarAnimes(newC) {
     ])
     return info.insertId;
 }
+
+export async function alterarAnimes(id, newC) {
+    const comando = `update animes 
+                     set nome = ?,
+                         genero = ?,
+                         episodios = ?,
+                         ano_lancamento = ?,
+                         estudio = ?,
+                         avaliacao = ?
+                     where id = ?`
+    const [info] = await connection.query(comando, [
+        newC.nome,
+        newC.genero,
+        newC.episodios,
+        newC.ano_lancamento,
+        newC.estudio,
+        newC.avaliacao,
+        id
+    ])
+}
+
+export async function deletarAnimes(id) {
+    const comando = `delete from animes
+                     where id = ?`
+
+    const [info] = await connection.query(comando, [id])
+}

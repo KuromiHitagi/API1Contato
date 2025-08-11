@@ -21,3 +21,36 @@ export async function adicionarTimes(newC) {
     ])
     return info.insertId;
 }
+
+export async function alterarTimes(id, newC) {
+    const comando = `update times_futebol
+                     set nome = ?,
+                         cidade = ?,
+                         estado = ?,
+                         pais = ?,
+                         ano_fundacao = ?,
+                         estadio = ?,
+                         capacidade_estadio = ?,
+                         tecnico = ?,
+                         liga = ?
+                     where id = ?`;
+    const [info] = await connection.query(comando, [
+        newC.nome,
+        newC.cidade,
+        newC.estado,
+        newC.pais,
+        newC.ano_fundacao,
+        newC.estadio,
+        newC.capacidade_estadio,
+        newC.tecnico,
+        newC.liga,
+        id
+    ]);
+    return "Time alterado com sucesso!";
+}
+
+export async function deletarTimes(id) {
+    const comando = `delete from times_futebol where id = ?`;
+    const [info] = await connection.query(comando, [id]);
+    return "Time deletado com sucesso!";
+}

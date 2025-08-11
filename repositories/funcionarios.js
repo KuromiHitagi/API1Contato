@@ -17,3 +17,28 @@ export async function adicionarFuncionarios(newC) {
     ])
     return info.insertId;
 }
+
+export async function alterarFuncionarios(id, newC) {
+    const comando = `update funcionarios
+                     set nome = ?,
+                         cpf = ?,
+                         cargo = ?,
+                         tempo_trabalhado = ?,
+                         data_inicio = ?
+                     where id = ?`;
+    const [info] = await connection.query(comando, [
+        newC.nome,
+        newC.cpf,
+        newC.cargo,
+        newC.tempo_trabalhado,
+        newC.data_inicio,
+        id
+    ]);
+    return "Funcionário alterado com sucesso!";
+}
+
+export async function deletarFuncionarios(id) {
+    const comando = `delete from funcionarios where id = ?`;
+    const [info] = await connection.query(comando, [id]);
+    return "Funcionário deletado com sucesso!";
+}
