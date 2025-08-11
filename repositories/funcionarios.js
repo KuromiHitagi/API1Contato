@@ -18,6 +18,19 @@ export async function adicionarFuncionarios(newC) {
     return info.insertId;
 }
 
+export async function listarIdFuncionarios(id){
+    const comando = `select * from funcionarios 
+                     where id = ?'`
+    const [registros] = await connection.query(comando)
+    return registros;
+}
+
+export async function filtrarFuncionarios(nome){
+    const comando = `select * from funcionarios
+                     where nome like ?`
+    const [registros] = await connection.query(comando, ['%'+nome+'%'])
+}
+
 export async function alterarFuncionarios(id, newC) {
     const comando = `update funcionarios
                      set nome = ?,

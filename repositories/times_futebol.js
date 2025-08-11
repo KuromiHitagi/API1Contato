@@ -22,6 +22,19 @@ export async function adicionarTimes(newC) {
     return info.insertId;
 }
 
+export async function listarIdTimes(id){
+    const comando = `select * from times 
+                     where id = ?'`
+    const [registros] = await connection.query(comando)
+    return registros;
+}
+
+export async function filtrarTimes(nome){
+    const comando = `select * from times
+                     where nome like ?`
+    const [registros] = await connection.query(comando, ['%'+nome+'%'])
+}
+
 export async function alterarTimes(id, newC) {
     const comando = `update times_futebol
                      set nome = ?,

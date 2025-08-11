@@ -19,6 +19,19 @@ export async function adicionarMotos(newC) {
     return info.insertId;
 }
 
+export async function listarIdMotos(id){
+    const comando = `select * from motos 
+                     where id = ?'`
+    const [registros] = await connection.query(comando)
+    return registros;
+}
+
+export async function filtrarMotos(nome){
+    const comando = `select * from motos
+                     where nome like ?`
+    const [registros] = await connection.query(comando, ['%'+nome+'%'])
+}
+
 export async function alterarMotos(id, newC) {
     const comando = `update trabalhos_motos
                      set placa_moto = ?,

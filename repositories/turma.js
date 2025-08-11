@@ -19,6 +19,19 @@ export async function adicionarTurma(newC) {
     return info.insertId;
 }
 
+export async function listarIdTurma(id){
+    const comando = `select * from turma 
+                     where id = ?'`
+    const [registros] = await connection.query(comando)
+    return registros;
+}
+
+export async function filtrarTurma(nome){
+    const comando = `select * from turma
+                     where nome like ?`
+    const [registros] = await connection.query(comando, ['%'+nome+'%'])
+}
+
 export async function alterarTurma(id, newC) {
     const comando = `update turma
                      set turma = ?,

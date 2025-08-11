@@ -20,6 +20,19 @@ export async function adicionarPizzas(newC) {
     return info.insertId;
 }
 
+export async function listarIdPizzas(id){
+    const comando = `select * from pizzas 
+                     where id = ?'`
+    const [registros] = await connection.query(comando)
+    return registros;
+}
+
+export async function filtrarPizzas(nome){
+    const comando = `select * from pizzas
+                     where nome like ?`
+    const [registros] = await connection.query(comando, ['%'+nome+'%'])
+}
+
 export async function alterarPizzas(id, newC) {
     const comando = `update pizzas
                      set nome = ?,

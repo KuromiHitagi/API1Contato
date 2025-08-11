@@ -17,6 +17,19 @@ export async function adicionarFilme(newC) {
     return info.insertId;
 }
 
+export async function listarIdFilme(id){
+    const comando = `select * from filme 
+                     where id = ?'`
+    const [registros] = await connection.query(comando)
+    return registros;
+}
+
+export async function filtrarFilme(nome){
+    const comando = `select * from filme
+                     where nome like ?`
+    const [registros] = await connection.query(comando, ['%'+nome+'%'])
+}
+
 export async function alterarFilme(id, newC) {
     const comando = `update filme
                      set titulo = ?,

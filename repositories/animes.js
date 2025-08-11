@@ -2,8 +2,21 @@ import { connection } from "../api/connection.js";
 
 export async function listarAnimes() {
     const comando = `select * from animes`
-    const registros = await connection.query(comando)
+    const [registros] = await connection.query(comando)
     return registros;
+}
+
+export async function listarIdAnimes(id){
+    const comando = `select * from animes 
+                     where id = ?'`
+    const [registros] = await connection.query(comando)
+    return registros;
+}
+
+export async function filtrarAnimes(nome){
+    const comando = `select * from animes
+                     where nome like ?`
+    const [registros] = await connection.query(comando, ['%'+nome+'%'])
 }
 
 export async function adicionarAnimes(newC) {

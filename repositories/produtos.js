@@ -22,6 +22,19 @@ export async function adicionarProduto(newC) {
     return info.insertId;
 }
 
+export async function listarIdProduto(id){
+    const comando = `select * from produto
+                     where id = ?'`
+    const [registros] = await connection.query(comando)
+    return registros;
+}
+
+export async function filtrarProduto(nome){
+    const comando = `select * from produto
+                     where nome like ?`
+    const [registros] = await connection.query(comando, ['%'+nome+'%'])
+}
+
 export async function alterarProduto(id, newC) {
     const comando = `update produto
                      set id_categoria = ?,

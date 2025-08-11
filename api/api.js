@@ -1,5 +1,5 @@
 import express from 'express';
-import { listarTurma, adicionarTurma } from "../repositories/turma.js";
+import { listarTurma, adicionarTurma, listarIdTurma, filtrarTurma } from "../repositories/turma.js";
 import { listarAnimes, adicionarAnimes, alterarAnimes, deletarAnimes } from '../repositories/animes.js';
 import { listarTimes, adicionarTimes, alterarTimes, deletarTimes } from '../repositories/times_futebol.js';
 import { listarMotos, adicionarMotos } from '../repositories/trabalhos_motos.js';
@@ -18,10 +18,32 @@ api.get('/turma', async (req, resp) => {
     let registros = await listarTurma();
     resp.send(registros)
 })
+api.get('/turma/:id', async (req,resp) => {
+    let id = req.params.id;
+    let registros = await listarIdTurma(id);
+    resp.send(registros)
+})
+api.get('/turma/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarTurma(nome);
+    resp.send(registros)
+})
 api.post('/turma', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarTurma(Nova);
     resp.send({newId: id})
+})
+api.put('/turma/:id', async (req, resp) => {
+    let id = Number(req.params.id);
+    let newC = req.body;
+
+    await alterarturma(id, newC);
+    resp.send();
+})
+api.delete('/turma/:id', async (req, resp) => {
+    let id = Number(req.params.id);
+    await deletarTurma(id);
+    resp.send();
 })
 
 //Tabela Animes
@@ -30,6 +52,17 @@ api.get('/animes', async (req, resp) => {
     let registros = await listarAnimes();
     resp.send(registros)
 })
+api.get('/animes/:id', async (req, resp) => {
+    let id = req.params.id;
+    let registros = await listarIdAnime(id);
+    resp.send(registros);
+});
+
+api.get('/animes/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarAnime(nome);
+    resp.send(registros);
+});
 api.post('/animes', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarAnimes(Nova);
@@ -54,6 +87,17 @@ api.get('/times_futebol', async (req, resp) => {
     let registros = await listarTimes();
     resp.send(registros)
 })
+api.get('/times_futebol/:id', async (req, resp) => {
+    let id = req.params.id;
+    let registros = await listarIdTime(id);
+    resp.send(registros);
+});
+
+api.get('/times_futebol/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarTime(nome);
+    resp.send(registros);
+});
 api.post('/times_futebol', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarTimes(Nova);
@@ -78,6 +122,17 @@ api.get('/trabalhos_motos', async (req, resp) => {
     let registros = await listarMotos();
     resp.send(registros)
 })
+api.get('/trabalhos_motos/:id', async (req, resp) => {
+    let id = req.params.id;
+    let registros = await listarIdMoto(id);
+    resp.send(registros);
+});
+
+api.get('/trabalhos_motos/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarMoto(nome);
+    resp.send(registros);
+});
 api.post('/trabalhos_motos', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarMotos(Nova);
@@ -102,6 +157,17 @@ api.get('/pizzas', async (req, resp) => {
     let registros = await listarPizzas();
     resp.send(registros)
 })
+api.get('/pizzas/:id', async (req, resp) => {
+    let id = req.params.id;
+    let registros = await listarIdPizza(id);
+    resp.send(registros);
+});
+
+api.get('/pizzas/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarPizza(nome);
+    resp.send(registros);
+});
 api.post('/pizzas', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarPizzas(Nova);
@@ -126,6 +192,17 @@ api.get('/funcionarios', async (req, resp) => {
     let registros = await listarFuncionarios();
     resp.send(registros)
 })
+api.get('/funcionarios/:id', async (req, resp) => {
+    let id = req.params.id;
+    let registros = await listarIdFuncionario(id);
+    resp.send(registros);
+});
+
+api.get('/funcionarios/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarFuncionario(nome);
+    resp.send(registros);
+});
 api.post('/funcionarios', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarFuncionarios(Nova);
@@ -150,6 +227,17 @@ api.get('/filme', async (req, resp) => {
     let registros = await listarFilme();
     resp.send(registros)
 })
+api.get('/filme/:id', async (req, resp) => {
+    let id = req.params.id;
+    let registros = await listarIdFilme(id);
+    resp.send(registros);
+});
+
+api.get('/filme/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarFilme(nome);
+    resp.send(registros);
+});
 api.post('/filme', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarFilme(Nova);
@@ -174,6 +262,17 @@ api.get('/tenis', async (req, resp) => {
     let registros = await listarTenis();
     resp.send(registros)
 })
+api.get('/tenis/:id', async (req, resp) => {
+    let id = req.params.id;
+    let registros = await listarIdTenis(id);
+    resp.send(registros);
+});
+
+api.get('/tenis/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarTenis(nome);
+    resp.send(registros);
+});
 api.post('/tenis', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarTenis(Nova);
@@ -198,6 +297,18 @@ api.get('/produto', async (req, resp) => {
     let registros = await listarProduto();
     resp.send(registros)
 })
+api.get('/produto/:id', async (req, resp) => {
+    let id = req.params.id;
+    let registros = await listarIdProduto(id);
+    resp.send(registros);
+});
+
+api.get('/produto/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarProduto(nome);
+    resp.send(registros);
+});
+
 api.post('/produto', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarProduto(Nova);
@@ -222,6 +333,17 @@ api.get('/hospital', async (req, resp) => {
     let registros = await listarPaciente();
     resp.send(registros)
 })
+api.get('/hospital/:id', async (req, resp) => {
+    let id = req.params.id;
+    let registros = await listarIdPaciente(id);
+    resp.send(registros);
+});
+
+api.get('/hospital/filtro', async (req, resp) => {
+    let nome = req.query.nome;
+    let registros = await filtrarPaciente(nome);
+    resp.send(registros);
+});
 api.post('/hospital', async (req, resp) => {
     let Nova = req.body;
     let id = await adicionarPaciente(Nova);

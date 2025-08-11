@@ -19,6 +19,19 @@ export async function adicionarTenis(newC) {
     return info.insertId;
 }
 
+export async function listarIdTenis(id){
+    const comando = `select * from tenis 
+                     where id = ?'`
+    const [registros] = await connection.query(comando)
+    return registros;
+}
+
+export async function filtrarTenis(nome){
+    const comando = `select * from tenis
+                     where nome like ?`
+    const [registros] = await connection.query(comando, ['%'+nome+'%'])
+}
+
 export async function alterarTenis(id, newC) {
     const comando = `update tenis
                      set nome = ?,
