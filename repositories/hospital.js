@@ -20,13 +20,13 @@ export async function adicionarPaciente(newC){
     return info.insertId;
 }
 
-export async function ListarIdHospital(id) {
+export async function ListarIdPaciente(id) {
     const comando = `select * from hospital where id = ?`;
     const [registros] = await connection.query(comando, [id]);
     return registros;
 }
 
-export async function filtrarHospital(nome){
+export async function filtrarPaciente(nome){
     const comando = `select * from hospital where hospital = ?`;
     const [registros] = await connection.query(comando, [nome]);
     return registros;
